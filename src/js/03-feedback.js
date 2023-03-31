@@ -14,6 +14,7 @@ formEl.addEventListener(
 const savedFeedbackData = JSON.parse(
   localStorage.getItem('feedback-form-state')
 );
+
 if (savedFeedbackData) {
   email.value = savedFeedbackData.email;
   message.value = savedFeedbackData.message;
@@ -21,7 +22,13 @@ if (savedFeedbackData) {
 
 formEl.addEventListener('submit', event => {
   event.preventDefault();
-  console.log(JSON.parse(localStorage.getItem('feedback-form-state')));
+
+  if (!email.value || !message.value) {
+    return;
+  }
+
+  feedbackData = { email: email.value, message: message.value };
+  console.log(feedbackData);
   formEl.reset();
   localStorage.removeItem('feedback-form-state');
 });
